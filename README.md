@@ -44,6 +44,7 @@ A modern, responsive React application for university students featuring authent
    - Enable Authentication (Email/Password)
    - Enable Firestore Database
    - Copy your config to `src/firebaseConfig.js`
+   - Dummy Phone Number +15551234567 OTP : 123456
 
 4. **Start development server**
    ```bash
