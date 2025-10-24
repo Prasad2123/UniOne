@@ -1,6 +1,7 @@
 # UniOne - Student Portal
 
 A modern, responsive React application for university students featuring authentication, dark mode, and comprehensive academic resources.
+- Prasad Pilke
 
 ## 🚀 Features
 
