@@ -86,7 +86,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-primary flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-red-500 flex items-center justify-center px-4 py-12">
       <Card className="w-full max-w-md animate-fade-in">
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-gradient-to-r from-accent-500 to-accent-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
