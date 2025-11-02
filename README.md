@@ -54,7 +54,36 @@ A modern, responsive React application for university students featuring authent
    ```
 
 5. **Open your browser**
-   Navigate to `http://localhost:3000`
+   Navigate to `http://localhost:5173` (default Vite port)
+
+## 📽️ Demo & Walkthrough
+
+### Quick Demo
+- Start: `npm install` → `npm run dev`
+- Open: `http://localhost:5173`
+- Login with demo credentials:
+  - Email: `prasad21@gmail.com`  |  Password: `1234567`
+  - Phone: `+15551234567`  |  OTP: `123456`
+
+### Primary Routes
+- `/` — Home/Dashboard
+- `/pyqs` — Previous Year Questions with PDF viewer
+- `/smart-notes` — AI-powered notes
+- `/announcements` — University announcements
+- `/profile` — Profile management
+
+### Things to Try
+- Toggle dark/light mode and refresh to see persistence
+- Open a PYQ and view it in the PDF modal
+- Use the chatbot on the Home page
+- Update profile details and return to confirm changes
+
+### Optional: Screenshots/GIFs
+Add screenshots here for quick visual context:
+- Home (light/dark)
+- PYQs with PDF modal
+- Smart Notes
+- Profile
 
 ## 🔧 Configuration
 
