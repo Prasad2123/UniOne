@@ -12,15 +12,27 @@ const ProfileCompletion = ({ userData, onUpdate }) => {
     year: userData?.year || ''
   });
 
+  // Update formData when userData changes
+  React.useEffect(() => {
+    if (userData) {
+      setFormData(prev => ({
+        collegeName: userData.collegeName || prev.collegeName || '',
+        rollNumber: userData.rollNumber || prev.rollNumber || '',
+        stream: userData.stream || prev.stream || '',
+        year: userData.year || prev.year || ''
+      }));
+    }
+  }, [userData]);
+
   const calculateCompletion = () => {
     const fields = ['name', 'university', 'department', 'collegeName', 'rollNumber', 'stream', 'year'];
+    const mergedData = { ...userData, ...formData };
     const completedFields = fields.filter(field => {
-      if (field === 'name') return userData?.name;
-      if (field === 'university') return userData?.university;
-      if (field === 'department') return userData?.department;
-      return formData[field] || userData?.[field];
+      const value = mergedData[field];
+      return value && value.toString().trim() !== '';
     });
-    return Math.round((completedFields.length / fields.length) * 100);
+    const percentage = Math.round((completedFields.length / fields.length) * 100);
+    return percentage;
   };
 
   const completionPercentage = calculateCompletion();
@@ -135,12 +147,13 @@ const ProfileCompletion = ({ userData, onUpdate }) => {
                 className="input-field"
               >
                 <option value="">Select Stream</option>
-                <option value="Science">Science</option>
-                <option value="Commerce">Commerce</option>
-                <option value="Arts">Arts</option>
-                <option value="Engineering">Engineering</option>
-                <option value="Medical">Medical</option>
-                <option value="Other">Other</option>
+                <option value="Computer Engineering">Computer Engineering</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Electrical Engineering">Electrical Engineering</option>
+                <option value="Electronics & Telecommunication Engineering">Electronics & Telecommunication Engineering</option>
+                <option value="Artificial Intelligence & Data Science">Artificial Intelligence & Data Science</option>
               </select>
             </div>
             <div>

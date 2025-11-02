@@ -49,7 +49,6 @@ export const mockAPI = {
     
     async downloadPaper(paperId) {
       await delay(500);
-      console.log(`Downloading paper with ID: ${paperId}`);
       return { success: true, message: 'Download started' };
     }
   },
@@ -156,7 +155,7 @@ export const mockAPI = {
           id: 1,
           title: 'Annual Tech Fest 2024 - Registration Open',
           description: 'Join us for the biggest technical festival of the year. Registrations are now open for various competitions and workshops.',
-          university: 'IIT Delhi',
+          university: 'Maharashtra University',
           date: '2024-02-15',
           time: '10:00 AM',
           location: 'Main Auditorium, IIT Delhi',
@@ -170,7 +169,7 @@ export const mockAPI = {
           id: 2,
           title: 'Scholarship Applications Due Soon',
           description: 'Merit-based scholarship applications for the academic year 2024-25 are due by March 1st. Apply now to secure your funding.',
-          university: 'University of Delhi',
+          university: 'Maharashtra University',
           date: '2024-02-28',
           time: '11:59 PM',
           location: 'Online Portal',
@@ -182,18 +181,13 @@ export const mockAPI = {
         }
       ];
       
-      if (university && university !== 'All Universities') {
-        return allAnnouncements.filter(announcement => 
-          announcement.university === university
-        );
-      }
-      
-      return allAnnouncements;
+      return allAnnouncements.filter(announcement => 
+        announcement.university === 'Maharashtra University'
+      );
     },
     
     async markAsRead(announcementId) {
       await delay(300);
-      console.log(`Marking announcement ${announcementId} as read`);
       return { success: true };
     }
   }

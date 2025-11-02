@@ -11,7 +11,7 @@ const Signup = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    university: '',
+    university: 'Maharashtra University',
     department: '',
     year: ''
   });
@@ -23,31 +23,17 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const universities = [
-    'University of Delhi',
-    'JNU',
-    'IIT Delhi',
-    'IIT Mumbai',
-    'IIT Chennai',
-    'IIT Kharagpur',
-    'IIT Kanpur',
-    'IIT Roorkee',
-    'Other'
+    'Maharashtra University'
   ];
 
   const departments = [
-    'Computer Science',
-    'Electronics',
-    'Mechanical',
-    'Civil',
-    'Electrical',
-    'Mathematics',
-    'Physics',
-    'Chemistry',
-    'Biology',
-    'Economics',
-    'Literature',
-    'History',
-    'Other'
+    'Computer Engineering',
+    'Information Technology',
+    'Mechanical Engineering',
+    'Civil Engineering',
+    'Electrical Engineering',
+    'Electronics & Telecommunication Engineering',
+    'Artificial Intelligence & Data Science'
   ];
 
   const years = ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th Year', 'Graduate'];
@@ -81,8 +67,6 @@ const Signup = () => {
     setError('');
 
     try {
-      console.log('Attempting to create user with email:', formData.email);
-      
       const userData = {
         name: formData.name,
         university: formData.university,
@@ -90,7 +74,6 @@ const Signup = () => {
         year: formData.year
       };
 
-      console.log('User data to be saved:', userData);
       await createUser(formData.email, formData.password, userData);
       
       if (rememberMe) {
@@ -172,10 +155,7 @@ const Signup = () => {
                 required
                 className="input-field"
               >
-                <option value="">Select University</option>
-                {universities.map((uni) => (
-                  <option key={uni} value={uni}>{uni}</option>
-                ))}
+                <option value="Maharashtra University">Maharashtra University</option>
               </select>
             </div>
 
@@ -236,7 +216,7 @@ const Signup = () => {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-primary-500 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-200"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-primary-500 dark:text-accent-400"
               >
                 {showPassword ? (
                   <EyeSlashIcon className="w-5 h-5" />
@@ -265,7 +245,7 @@ const Signup = () => {
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-primary-500 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-200"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-primary-500 dark:text-accent-400"
               >
                 {showConfirmPassword ? (
                   <EyeSlashIcon className="w-5 h-5" />
@@ -306,7 +286,7 @@ const Signup = () => {
             Already have an account?{' '}
             <Link
               to="/login"
-              className="text-accent-500 hover:text-accent-600 dark:text-accent-400 dark:hover:text-accent-300 font-medium"
+              className="text-accent-500 dark:text-accent-400 font-medium"
             >
               Sign in
             </Link>

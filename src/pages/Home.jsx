@@ -17,7 +17,6 @@ const Home = () => {
 
   const handleProfileUpdate = async (newData) => {
     // In a real app, this would update the user data in Firestore
-    console.log('Updating profile:', newData);
     setUserData(prev => ({ ...prev, ...newData }));
   };
 
@@ -37,7 +36,7 @@ const Home = () => {
       color: 'from-green-500 to-green-600'
     },
     {
-      title: 'Announcements',
+      title: 'Public Announcements',
       description: 'Stay updated with latest university news and events',
       icon: SpeakerWaveIcon,
       link: '/announcements',
@@ -94,7 +93,7 @@ const Home = () => {
             <Link key={feature.title} to={feature.link}>
               <Card className="h-full group animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
                 <div className="text-center">
-                  <div className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                  <div className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center mx-auto mb-4 transition-transform duration-300`}>
                     <feature.icon className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-xl font-semibold text-primary-900 dark:text-primary-50 mb-2">
@@ -119,7 +118,7 @@ const Home = () => {
               <Link key={link.title} to={link.link}>
                 <Card className="group animate-slide-up" style={{ animationDelay: `${(index + 3) * 0.1}s` }}>
                   <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-accent-100 dark:bg-accent-900 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-12 h-12 bg-accent-100 dark:bg-dark-700 rounded-xl flex items-center justify-center transition-transform duration-300">
                       <link.icon className="w-6 h-6 text-accent-600 dark:text-accent-400" />
                     </div>
                     <div>

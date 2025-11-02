@@ -20,7 +20,7 @@ function AppContent() {
   const hideLayout = ['/login', '/signup'].includes(location.pathname);
 
   return (
-    <div className="min-h-screen bg-primary-50 dark:bg-primary-900 transition-colors duration-300 flex flex-col">
+    <div className="min-h-screen bg-white dark:bg-dark-900 transition-colors duration-300 flex flex-col">
       {!hideLayout && <Navbar />}
       <main className="flex-1">
         <Routes>

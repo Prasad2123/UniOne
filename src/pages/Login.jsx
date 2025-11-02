@@ -86,7 +86,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-red-500 flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gradient-primary flex items-center justify-center px-4 py-12">
       <Card className="w-full max-w-md animate-fade-in">
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-gradient-to-r from-accent-500 to-accent-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -112,7 +112,7 @@ const Login = () => {
               className={`flex-1 flex items-center justify-center space-x-2 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
                 authMethod === 'email'
                   ? 'bg-white dark:bg-primary-600 text-primary-900 dark:text-primary-50 shadow-sm'
-                  : 'text-primary-600 dark:text-primary-400 hover:text-primary-900 dark:hover:text-primary-50'
+                  : 'text-primary-600 dark:text-accent-400'
               }`}
             >
               <EnvelopeIcon className="w-4 h-4" />
@@ -129,7 +129,7 @@ const Login = () => {
               className={`flex-1 flex items-center justify-center space-x-2 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
                 authMethod === 'phone'
                   ? 'bg-white dark:bg-primary-600 text-primary-900 dark:text-primary-50 shadow-sm'
-                  : 'text-primary-600 dark:text-primary-400 hover:text-primary-900 dark:hover:text-primary-50'
+                  : 'text-primary-600 dark:text-accent-400'
               }`}
             >
               <DevicePhoneMobileIcon className="w-4 h-4" />
@@ -181,7 +181,7 @@ const Login = () => {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-primary-500 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-200"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-primary-500 dark:text-accent-400"
                   >
                     {showPassword ? (
                       <EyeSlashIcon className="w-5 h-5" />
@@ -206,7 +206,7 @@ const Login = () => {
                 </label>
                 <Link
                   to="/forgot-password"
-                  className="text-sm text-accent-500 hover:text-accent-600 dark:text-accent-400 dark:hover:text-accent-300"
+                  className="text-sm text-accent-500 dark:text-accent-400"
                 >
                   Forgot password?
                 </Link>

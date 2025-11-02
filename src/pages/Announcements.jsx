@@ -6,19 +6,11 @@ import LoadingSpinner from '../components/LoadingSpinner';
 const Announcements = () => {
   const [announcements, setAnnouncements] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedUniversity, setSelectedUniversity] = useState('All Universities');
+  const [selectedUniversity, setSelectedUniversity] = useState('Maharashtra University');
   const [filteredAnnouncements, setFilteredAnnouncements] = useState([]);
 
   const universities = [
-    'All Universities',
-    'University of Delhi',
-    'JNU',
-    'IIT Delhi',
-    'IIT Mumbai',
-    'IIT Chennai',
-    'IIT Kharagpur',
-    'IIT Kanpur',
-    'IIT Roorkee'
+    'Maharashtra University'
   ];
 
   // Mock API call to fetch announcements
@@ -34,7 +26,7 @@ const Announcements = () => {
           id: 1,
           title: 'Annual Tech Fest 2024 - Registration Open',
           description: 'Join us for the biggest technical festival of the year. Registrations are now open for various competitions and workshops.',
-          university: 'IIT Delhi',
+          university: 'Maharashtra University',
           date: '2024-02-15',
           time: '10:00 AM',
           location: 'Main Auditorium, IIT Delhi',
@@ -46,7 +38,7 @@ const Announcements = () => {
           id: 2,
           title: 'Scholarship Applications Due Soon',
           description: 'Merit-based scholarship applications for the academic year 2024-25 are due by March 1st. Apply now to secure your funding.',
-          university: 'University of Delhi',
+          university: 'Maharashtra University',
           date: '2024-02-28',
           time: '11:59 PM',
           location: 'Online Portal',
@@ -58,7 +50,7 @@ const Announcements = () => {
           id: 3,
           title: 'Library Extended Hours for Exam Period',
           description: 'The central library will remain open 24/7 during the examination period to support student studies.',
-          university: 'JNU',
+          university: 'Maharashtra University',
           date: '2024-03-01',
           time: '12:00 AM',
           location: 'Central Library',
@@ -70,7 +62,7 @@ const Announcements = () => {
           id: 4,
           title: 'Career Fair 2024 - Top Companies Participating',
           description: 'Over 50 leading companies will participate in our annual career fair. Don\'t miss this opportunity to network and find internships.',
-          university: 'IIT Mumbai',
+          university: 'Maharashtra University',
           date: '2024-03-10',
           time: '9:00 AM',
           location: 'Convocation Hall',
@@ -82,7 +74,7 @@ const Announcements = () => {
           id: 5,
           title: 'Research Symposium - Call for Papers',
           description: 'Submit your research papers for the annual research symposium. Deadline for submission is March 15th.',
-          university: 'IIT Chennai',
+          university: 'Maharashtra University',
           date: '2024-03-15',
           time: '11:59 PM',
           location: 'Online Submission',
@@ -94,7 +86,7 @@ const Announcements = () => {
           id: 6,
           title: 'Sports Week 2024 - Registration Open',
           description: 'Annual sports week featuring cricket, football, basketball, and more. Team registrations are now open.',
-          university: 'IIT Kharagpur',
+          university: 'Maharashtra University',
           date: '2024-03-20',
           time: '8:00 AM',
           location: 'Sports Complex',
@@ -118,13 +110,9 @@ const Announcements = () => {
   }, []);
 
   useEffect(() => {
-    if (selectedUniversity === 'All Universities') {
-      setFilteredAnnouncements(announcements);
-    } else {
-      setFilteredAnnouncements(announcements.filter(announcement => 
-        announcement.university === selectedUniversity
-      ));
-    }
+    setFilteredAnnouncements(announcements.filter(announcement => 
+      announcement.university === selectedUniversity || announcement.university === 'Maharashtra University'
+    ));
   }, [selectedUniversity, announcements]);
 
   const getPriorityColor = (priority) => {
@@ -162,7 +150,7 @@ const Announcements = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12 animate-fade-in">
           <h1 className="text-4xl font-bold text-primary-900 dark:text-primary-50 mb-4">
-            Announcements
+            Public Announcements
           </h1>
           <p className="text-xl text-primary-600 dark:text-primary-400">
             Stay updated with latest university news and events
@@ -192,7 +180,7 @@ const Announcements = () => {
 
         {/* Announcements Grid */}
         {loading ? (
-          <LoadingSpinner text="Loading announcements..." />
+          <LoadingSpinner text="Loading public announcements..." />
         ) : filteredAnnouncements.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredAnnouncements.map((announcement, index) => (
@@ -265,12 +253,10 @@ const Announcements = () => {
           <Card className="text-center py-12">
             <SpeakerWaveIcon className="w-16 h-16 text-primary-400 dark:text-primary-500 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-primary-900 dark:text-primary-50 mb-2">
-              No announcements found
+              No public announcements found
             </h3>
-            <p className="text-primary-600 dark:text-primary-400">
-              {selectedUniversity !== 'All Universities'
-                ? 'No announcements available for the selected university.'
-                : 'Announcements will appear here when available.'}
+            <p className="text-primary-600 dark:text-accent-400">
+              No public announcements available.
             </p>
           </Card>
         )}

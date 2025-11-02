@@ -13,15 +13,15 @@ const PDFViewerModal = ({ isOpen, onClose, pdfUrl, title = 'PDF Viewer' }) => {
       />
       
       {/* Modal */}
-      <div className="relative bg-white dark:bg-primary-800 rounded-2xl shadow-2xl w-[90vw] h-[90vh] max-w-6xl mx-4 animate-scale-in">
+      <div className="relative bg-white dark:bg-dark-800 rounded-2xl shadow-2xl w-[90vw] h-[90vh] max-w-6xl mx-4 animate-scale-in">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-primary-200 dark:border-primary-700">
+        <div className="flex items-center justify-between p-4 border-b border-primary-200 dark:border-dark-700">
           <h3 className="text-lg font-semibold text-primary-900 dark:text-primary-50">
             {title}
           </h3>
           <button
             onClick={onClose}
-            className="p-2 text-primary-500 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-200 transition-colors duration-200"
+            className="p-2 text-primary-500 dark:text-accent-400 transition-colors duration-200"
           >
             <XMarkIcon className="w-6 h-6" />
           </button>
@@ -32,7 +32,7 @@ const PDFViewerModal = ({ isOpen, onClose, pdfUrl, title = 'PDF Viewer' }) => {
           {pdfUrl ? (
             <iframe
               src={pdfUrl}
-              className="w-full h-full rounded-lg border border-primary-200 dark:border-primary-700"
+              className="w-full h-full rounded-lg border border-primary-200 dark:border-dark-700"
               title={title}
             />
           ) : (

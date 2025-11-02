@@ -149,8 +149,6 @@ const PYQs = () => {
 
   const handleDownload = (paper) => {
     // In a real app, this would trigger a download
-    console.log('Downloading:', paper.title);
-    // For demo purposes, we'll just show an alert
     alert(`Downloading ${paper.title}`);
   };
 

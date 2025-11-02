@@ -20,14 +20,14 @@ import Card from '../components/Card';
 import DigitalIDCard from '../components/DigitalIDCard';
 
 const Profile = () => {
-  const { currentUser, userData } = useAuth();
+  const { currentUser, userData, setUserData } = useAuth();
   const { isDarkMode, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [showDigitalID, setShowDigitalID] = useState(false);
   const [editForm, setEditForm] = useState({
     name: userData?.name || '',
-    university: userData?.university || '',
+    university: userData?.university || 'Maharashtra University',
     department: userData?.department || '',
     year: userData?.year || '',
     collegeName: userData?.collegeName || '',
@@ -51,17 +51,23 @@ const Profile = () => {
     }));
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     // In a real app, this would update the user data in Firestore
-    console.log('Saving profile:', editForm);
-    setIsEditing(false);
-    // Here you would typically call an update function to save to Firestore
+    try {
+      // Update userData in context to reflect changes
+      const updatedData = { ...userData, ...editForm };
+      setUserData(updatedData);
+      // Here you would typically call an update function to save to Firestore
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Error saving profile:', error);
+    }
   };
 
   const handleCancel = () => {
     setEditForm({
       name: userData?.name || '',
-      university: userData?.university || '',
+      university: userData?.university || 'Maharashtra University',
       department: userData?.department || '',
       year: userData?.year || '',
       collegeName: userData?.collegeName || '',
@@ -72,18 +78,13 @@ const Profile = () => {
   };
 
   const departments = [
-    'Computer Science',
-    'Electronics',
-    'Mechanical',
-    'Civil',
-    'Electrical',
-    'Mathematics',
-    'Physics',
-    'Chemistry',
-    'Biology',
-    'Economics',
-    'Literature',
-    'History'
+    'Computer Engineering',
+    'Information Technology',
+    'Mechanical Engineering',
+    'Civil Engineering',
+    'Electrical Engineering',
+    'Electronics & Telecommunication Engineering',
+    'Artificial Intelligence & Data Science'
   ];
 
   const years = ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th Year', 'Graduate'];
@@ -91,7 +92,7 @@ const Profile = () => {
   const stats = [
     { label: 'PYQs Downloaded', value: '24', icon: '📄' },
     { label: 'Smart Notes Studied', value: '18', icon: '📚' },
-    { label: 'Announcements Read', value: '45', icon: '📢' },
+    { label: 'Public Announcements Read', value: '45', icon: '📢' },
     { label: 'Days Active', value: '30', icon: '📅' }
   ];
 
@@ -175,9 +176,9 @@ const Profile = () => {
                   <input
                     type="text"
                     name="university"
-                    value={editForm.university}
-                    onChange={handleEditChange}
-                    className="input-field"
+                    value="Maharashtra University"
+                    readOnly
+                    className="input-field bg-primary-50 dark:bg-dark-700"
                   />
                 </div>
               </div>
@@ -350,7 +351,7 @@ const Profile = () => {
           <div className="text-center">
             <button
               onClick={handleLogout}
-              className="btn-secondary flex items-center space-x-2 mx-auto text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-red-900/20"
+              className="btn-secondary flex items-center space-x-2 mx-auto text-red-600 dark:text-red-400"
             >
               <ArrowRightOnRectangleIcon className="w-5 h-5" />
               <span>Sign Out</span>

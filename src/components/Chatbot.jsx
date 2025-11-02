@@ -84,7 +84,7 @@ const Chatbot = ({ position = 'bottom-right' }) => {
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1 text-primary-500 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-200"
+              className="p-1 text-primary-500 dark:text-accent-400"
             >
               <XMarkIcon className="w-5 h-5" />
             </button>
@@ -135,7 +135,7 @@ const Chatbot = ({ position = 'bottom-right' }) => {
               />
               <button
                 onClick={handleSendMessage}
-                className="p-2 bg-accent-500 hover:bg-accent-600 text-white rounded-xl transition-colors duration-200"
+                className="p-2 bg-accent-500 text-white rounded-xl transition-colors duration-200"
               >
                 <PaperAirplaneIcon className="w-4 h-4" />
               </button>
@@ -147,7 +147,7 @@ const Chatbot = ({ position = 'bottom-right' }) => {
       {/* Chat Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 bg-accent-500 hover:bg-accent-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 flex items-center justify-center"
+        className="w-14 h-14 bg-accent-500 text-white rounded-full shadow-lg transition-all duration-300 flex items-center justify-center"
       >
         {isOpen ? (
           <XMarkIcon className="w-6 h-6" />
