@@ -14,6 +14,9 @@ import Announcements from './pages/Announcements';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import ScholarshipInfo from './pages/ScholarshipInfo';
+import MockTests from './pages/MockTests';
+import Syllabus from './pages/Syllabus';
 
 function AppContent() {
   const location = useLocation();
@@ -52,6 +55,21 @@ function AppContent() {
           <Route path="/profile" element={
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          } />
+          <Route path="/scholarships" element={
+            <ProtectedRoute>
+              <ScholarshipInfo />
+            </ProtectedRoute>
+          } />
+          <Route path="/mock-tests" element={
+            <ProtectedRoute>
+              <MockTests />
+            </ProtectedRoute>
+          } />
+          <Route path="/syllabus" element={
+            <ProtectedRoute>
+              <Syllabus />
             </ProtectedRoute>
           } />
           
