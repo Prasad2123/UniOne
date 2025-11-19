@@ -1,0 +1,145 @@
+.team-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.team-main {
+  flex: 1;
+}
+
+.team-section {
+  padding: 5rem 2rem;
+  min-height: calc(100vh - 200px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.team-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.team-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 3rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--text-primary), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.team-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.25rem;
+  text-align: center;
+  color: var(--text-primary);
+  opacity: 0.8;
+  margin-bottom: 4rem;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.team-card {
+  background: var(--bg-secondary);
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: var(--transition);
+  border: 1px solid rgba(212, 175, 55, 0.1);
+  cursor: pointer;
+}
+
+.team-card:hover {
+  border-color: rgba(212, 175, 55, 0.3);
+  box-shadow: 0 15px 40px var(--shadow);
+}
+
+.team-image {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  border: 3px solid rgba(212, 175, 55, 0.5);
+}
+
+.team-name {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 auto 0.5rem;
+  max-width: 14ch;
+  min-height: 3.5rem; /* keeps all name blocks same height so alignment matches */
+}
+
+.team-role {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: var(--gold);
+  font-weight: 500;
+  margin: 0 auto;
+  max-width: 18ch;
+  min-height: 2.5rem; /* keeps role text height consistent */
+}
+
+@media (max-width: 1024px) {
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .team-section {
+    padding: 3rem 1rem;
+  }
+
+  .team-title {
+    font-size: 2rem;
+  }
+
+  .team-subtitle {
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .team-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .team-image {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+/* Light mode specific styling so team cards stand out clearly */
+[data-theme="light"] .team-page .team-card {
+  background: #ffffff;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+}
+
+

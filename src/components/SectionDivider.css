@@ -1,0 +1,25 @@
+.section-divider {
+  width: 100%;
+  max-width: 1200px;
+  height: 4px;
+  margin: 3rem auto;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(212, 175, 55, 0),
+    #d4af37,
+    #e4c56d,
+    #d4af37,
+    rgba(212, 175, 55, 0)
+  );
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
+
+.section-divider--hero {
+  margin-top: 2rem;
+}
+
+.section-divider--compact {
+  margin: 2rem auto;
+}
+

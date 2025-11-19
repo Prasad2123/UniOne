@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --------------------------
+   GLOBAL BASE RESET
+--------------------------- */
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    /* Light Mode */
+    --bg-light: #FFFFFF;
+    --text-light: #2B1D0E;
+    --gold: #D4AF37;
+    --shadow-light: rgba(0, 0, 0, 0.1);
+
+    /* Dark Mode */
+    --bg-dark: #1C140A;
+    --text-dark: #F5F5F5;
+
+    /* Transitions */
+    --transition: all 0.3s ease;
+  }
+
+  [data-theme="light"] {
+    --bg-primary: var(--bg-light);
+    --text-primary: var(--text-light);
+    --bg-secondary: #F9F9F9;
+    --shadow: var(--shadow-light);
+    --nav-surface: rgba(255, 255, 255, 0.9);
+    --nav-border: rgba(212, 175, 55, 0.7);
+    --nav-link: var(--text-light);
+  }
+
+  [data-theme="dark"] {
+    --bg-primary: var(--bg-dark);
+    --text-primary: var(--text-dark);
+    --bg-secondary: #2A2015;
+    --shadow: rgba(0, 0, 0, 0.3);
+    --nav-surface: rgba(28, 20, 10, 0.92);
+    --nav-border: rgba(228, 197, 109, 0.5);
+    --nav-link: var(--text-dark);
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: var(--transition);
+    min-height: 100vh;
+  }
+
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  button {
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    border: none;
+    outline: none;
+  }
+
+  input, textarea, select {
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+/* --------------------------
+   TEAM PAGE
+--------------------------- */
+.team-page {
+  /* (empty — you can add theme styles later) */
+}
+
+[data-theme="light"] .team-card {
+  background: #ffffff;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+}
+
+/* --------------------------
+   APP SHELL + SPLASH FIX
+--------------------------- */
+
+/* Main shell container */
+.app-shell {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* While splash is active */
+.app-shell--loading {
+  pointer-events: none;   /* disable clicks */
+  opacity: 1;             /* DO NOT hide app */
+  overflow: hidden;       /* safe */
+}
+
+/* After splash disappears */
+.app-shell:not(.app-shell--loading) {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+/* --------------------------
+   SEPARATORS / UTILITY
+--------------------------- */
+.hero-separator {
+  width: 100%;
+  max-width: 1200px;
+  margin: 2.5rem auto 3rem;
+}
