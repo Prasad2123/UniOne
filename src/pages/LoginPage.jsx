@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import CustomDropdown from '../components/CustomDropdown';
-import { login } from '../services/auth';
+import Toast from '../components/Toast';
+import SplashScreen from '../components/SplashScreen';
+import { login, logout, fetchUserProfile } from '../services/auth';
 import { useAuth } from '../context/AuthContext';
 import './LoginPage.css';
 
@@ -20,10 +22,12 @@ const LoginPage = () => {
   const [errors, setErrors] = useState({});
   const [authError, setAuthError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [toast, setToast] = useState(null);
+  const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
     if (user) {
-      navigate('/');
+      navigate('/dashboard');
     }
   }, [user, navigate]);
 
@@ -47,18 +51,51 @@ const LoginPage = () => {
     }
   };
 
-  const getFriendlyErrorMessage = (message) => {
-    if (!message) return 'Unable to login. Please try again.';
-    if (message.includes('auth/invalid-credential')) {
-      return 'Incorrect email or password.';
+  const getFriendlyErrorMessage = (error) => {
+    if (!error) return { message: 'Unable to login. Please try again.', type: 'error' };
+    
+    const code = error.code || '';
+    const message = error.message || '';
+    
+    // Role mismatch - show specific message with actual role
+    if (code === 'auth/role-mismatch') {
+      return { message: message || 'Selected role does not match your account role.', type: 'error' };
     }
-    if (message.includes('auth/user-disabled')) {
-      return 'Your account has been disabled. Contact support.';
+    
+    // Wrong password
+    if (code === 'auth/wrong-password' || code === 'auth/invalid-credential' || message.includes('wrong-password') || message.includes('invalid-credential')) {
+      return { message: 'Wrong password. Please try again.', type: 'error' };
     }
-    if (message.includes('auth/too-many-requests')) {
-      return 'Too many attempts. Please wait and try again.';
+    
+    // User not found
+    if (code === 'auth/user-not-found' || message.includes('user-not-found')) {
+      return { message: 'Account does not exist. Please sign up first.', type: 'error' };
     }
-    return 'Unable to login. Please try again.';
+    
+    // Invalid email
+    if (code === 'auth/invalid-email' || message.includes('invalid-email')) {
+      return { message: 'Invalid email. Please enter a valid email address.', type: 'error' };
+    }
+    
+    // Network errors
+    if (code === 'auth/network-request-failed' || message.includes('network')) {
+      return { message: 'Network errors. Please check your connection.', type: 'error' };
+    }
+    
+    // Profile not found
+    if (code === 'auth/profile-not-found') {
+      return { message: 'User profile not found. Please contact support.', type: 'error' };
+    }
+    
+    // Other errors
+    if (code === 'auth/user-disabled') {
+      return { message: 'Your account has been disabled. Contact support.', type: 'error' };
+    }
+    if (code === 'auth/too-many-requests') {
+      return { message: 'Too many attempts. Please wait and try again.', type: 'error' };
+    }
+    
+    return { message: message || 'Unable to login. Please try again.', type: 'error' };
   };
 
   const handleSubmit = async (e) => {
@@ -82,19 +119,76 @@ const LoginPage = () => {
 
     setIsSubmitting(true);
     setAuthError('');
+    setToast(null);
+    setShowLoader(false);
 
     try {
-      await login(formData.email, formData.password, formData.rememberMe);
-      navigate('/');
-    } catch (error) {
-      setAuthError(getFriendlyErrorMessage(error.message));
-    } finally {
+      // Authenticate the user
+      const userObj = await login(formData.email, formData.password, formData.rememberMe);
+
+      // After successful sign in, fetch profile from Firestore to verify role
+      const profile = await fetchUserProfile(userObj.uid);
+      if (!profile) {
+        // Profile missing
+        await logout();
+        const error = { code: 'auth/profile-not-found', message: 'Profile not found' };
+        const errorInfo = getFriendlyErrorMessage(error);
+        setToast({ message: errorInfo.message, type: errorInfo.type });
+        setAuthError(errorInfo.message);
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Check role mismatch
+      if (profile.role && profile.role.toLowerCase() !== formData.role.toLowerCase()) {
+        // Sign the user out to avoid a partial session
+        await logout();
+        const msg = `Role mismatch! You registered as "${profile.role}". Please select the correct role.`;
+        setToast({ message: msg, type: 'error' });
+        setAuthError(msg);
+        setIsSubmitting(false);
+        return;
+      }
+
+      // SUCCESS - Login OK
+      setToast({ message: 'Login successful!', type: 'success' });
+      setShowLoader(true);
+
+      // show splash loader then redirect
+      setTimeout(() => {
+        setShowLoader(false);
+        setTimeout(() => {
+          navigate('/dashboard');
+          setFormData({
+            role: 'Student',
+            email: '',
+            password: '',
+            rememberMe: false,
+          });
+          setErrors({});
+        }, 300);
+      }, 1500);
+
       setIsSubmitting(false);
+    } catch (error) {
+      setShowLoader(false);
+      setIsSubmitting(false);
+      const errorInfo = getFriendlyErrorMessage(error);
+      setToast({ message: errorInfo.message, type: errorInfo.type });
+      setAuthError(errorInfo.message);
     }
   };
 
   return (
     <div className="login-page">
+      <SplashScreen isActive={showLoader} />
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
       <Navbar />
       <main className="login-main">
         <motion.div
@@ -123,7 +217,7 @@ const LoginPage = () => {
             />
 
             <div className="form-group">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email" className="form-label">Email</label>
               <input
                 type="email"
                 id="email"
@@ -137,7 +231,7 @@ const LoginPage = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password" className="form-label">Password</label>
               <input
                 type="password"
                 id="password"
@@ -167,7 +261,7 @@ const LoginPage = () => {
 
             <motion.button
               type="submit"
-              className="login-button"
+              className="form-button-primary"
               disabled={isSubmitting}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -179,15 +273,9 @@ const LoginPage = () => {
               <span>or</span>
             </div>
 
-            {authError && (
-              <div className="error-banner" role="alert">
-                {authError}
-              </div>
-            )}
-
             <button
               type="button"
-              className="signup-button"
+              className="form-button-secondary"
               onClick={() => navigate('/signup')}
             >
               Sign up
@@ -201,4 +289,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import CustomDropdown from '../components/CustomDropdown';
+import Toast from '../components/Toast';
 import { signup as signupWithFirebase } from '../services/auth';
 import './SignupPage.css';
 
@@ -23,6 +24,7 @@ const SignupPage = () => {
   const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [toast, setToast] = useState(null);
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -40,19 +42,39 @@ const SignupPage = () => {
     }
   };
 
-  const getFriendlyErrorMessage = (message) => {
-    if (!message) return 'Unable to create your account. Please try again.';
-    if (message.includes('auth/email-already-in-use')) {
-      return 'This email is already registered. Try logging in.';
+  const getFriendlyErrorMessage = (error) => {
+    if (!error) return { message: 'Unable to create your account. Please try again.', type: 'error' };
+    
+    const code = error.code || '';
+    const message = error.message || '';
+    
+    // Specific error messages for different scenarios
+    if (code === 'auth/email-already-in-use' || message.includes('email-already-in-use')) {
+      return { message: 'User already registered. Please use a different email or log in.', type: 'error' };
     }
-    if (message.includes('auth/weak-password')) {
-      return 'Password should be at least 6 characters.';
+    
+    if (code === 'auth/weak-password' || message.includes('weak-password')) {
+      return { message: 'Password must be at least 6 characters.', type: 'error' };
     }
-    return 'Unable to create your account. Please try again.';
+    
+    if (code === 'auth/invalid-email' || message.includes('invalid-email')) {
+      return { message: 'Invalid email address.', type: 'error' };
+    }
+    
+    if (code === 'auth/network-request-failed' || message.includes('network')) {
+      return { message: 'Network errors. Please check your connection and try again.', type: 'error' };
+    }
+    
+    if (code === 'auth/permission-denied' || message.includes('permission-denied')) {
+      return { message: 'Firestore write errors. Please check database permissions.', type: 'error' };
+    }
+    
+    return { message: message || 'Unable to create your account. Please try again.', type: 'error' };
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setToast(null); // Clear existing toast
     const newErrors = {};
 
     if (!formData.fullName.trim()) {
@@ -71,10 +93,11 @@ const SignupPage = () => {
     if (!formData.confirmPassword) {
       newErrors.confirmPassword = 'Please confirm your password';
     } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
+      setToast({ message: 'Passwords do not match.', type: 'error' });
+      setIsSubmitting(false);
+      return;
     }
 
-    // Role-specific validation
     if (formData.role === 'Student') {
       if (!formData.studentId.trim()) {
         newErrors.studentId = 'Student ID is required';
@@ -110,16 +133,45 @@ const SignupPage = () => {
         employeeId: formData.employeeId,
         department: formData.department,
       });
-      navigate('/login', { replace: true });
-    } catch (error) {
-      setServerError(getFriendlyErrorMessage(error.message));
-    } finally {
+
+      setToast({ message: 'Account created successfully!', type: 'success' });
+      setServerError('');
+      setErrors({});
       setIsSubmitting(false);
+
+      setFormData({
+        role: 'Student',
+        fullName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        studentId: '',
+        course: '',
+        employeeId: '',
+        department: '',
+      });
+
+      setTimeout(() => {
+        navigate('/login', { replace: true });
+      }, 1400);
+    } catch (error) {
+      console.error('Signup error:', error);
+      setIsSubmitting(false);
+      const errorInfo = getFriendlyErrorMessage(error);
+      setToast({ message: errorInfo.message, type: errorInfo.type });
+      setServerError(errorInfo.message || 'Unable to create your account.');
     }
   };
 
   return (
     <div className="signup-page">
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
       <Navbar />
       <main className="signup-main">
         <motion.div
@@ -148,7 +200,7 @@ const SignupPage = () => {
             />
 
             <div className="form-group">
-              <label htmlFor="fullName">Full Name</label>
+              <label htmlFor="fullName" className="form-label">Full Name</label>
               <input
                 type="text"
                 id="fullName"
@@ -162,7 +214,7 @@ const SignupPage = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email" className="form-label">Email</label>
               <input
                 type="email"
                 id="email"
@@ -176,7 +228,7 @@ const SignupPage = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password" className="form-label">Password</label>
               <input
                 type="password"
                 id="password"
@@ -190,7 +242,7 @@ const SignupPage = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="confirmPassword">Confirm Password</label>
+              <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
               <input
                 type="password"
                 id="confirmPassword"
@@ -214,7 +266,7 @@ const SignupPage = () => {
                   style={{ overflow: 'hidden' }}
                 >
                   <div className="form-group">
-                    <label htmlFor="studentId">Student ID</label>
+                    <label htmlFor="studentId" className="form-label">Student ID</label>
                     <input
                       type="text"
                       id="studentId"
@@ -228,7 +280,7 @@ const SignupPage = () => {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="course">Course</label>
+                    <label htmlFor="course" className="form-label">Course</label>
                     <input
                       type="text"
                       id="course"
@@ -253,7 +305,7 @@ const SignupPage = () => {
                   style={{ overflow: 'hidden' }}
                 >
                   <div className="form-group">
-                    <label htmlFor="employeeId">Employee ID</label>
+                    <label htmlFor="employeeId" className="form-label">Employee ID</label>
                     <input
                       type="text"
                       id="employeeId"
@@ -267,7 +319,7 @@ const SignupPage = () => {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="department">Department</label>
+                    <label htmlFor="department" className="form-label">Department</label>
                     <input
                       type="text"
                       id="department"
@@ -285,19 +337,13 @@ const SignupPage = () => {
 
             <motion.button
               type="submit"
-              className="signup-button"
+              className="form-button-primary"
               disabled={isSubmitting}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               {isSubmitting ? 'Creating account...' : 'Create Account'}
             </motion.button>
-
-            {serverError && (
-              <div className="error-banner" role="alert">
-                {serverError}
-              </div>
-            )}
 
             <div className="signup-divider">
               <span>or</span>
@@ -315,4 +361,3 @@ const SignupPage = () => {
 };
 
 export default SignupPage;
-

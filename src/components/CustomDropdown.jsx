@@ -2,15 +2,15 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './CustomDropdown.css';
 
-const CustomDropdown = ({ 
-  id, 
-  name, 
-  value, 
-  onChange, 
-  options, 
-  label, 
+const CustomDropdown = ({
+  id,
+  name,
+  value,
+  onChange,
+  options,
+  label,
   ariaLabel,
-  className = '' 
+  className = ''
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -26,7 +26,7 @@ const CustomDropdown = ({
       document.addEventListener('mousedown', handleClickOutside);
       document.addEventListener('touchstart', handleClickOutside);
     }
-    
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('touchstart', handleClickOutside);
@@ -35,7 +35,7 @@ const CustomDropdown = ({
 
   const handleSelect = (optionValue) => {
     setIsOpen(false);
-    
+
     // Create a synthetic event object that matches React's event structure
     const syntheticEvent = {
       target: {
@@ -46,22 +46,21 @@ const CustomDropdown = ({
       preventDefault: () => {},
       stopPropagation: () => {},
     };
-    
+
     // Call onChange with the synthetic event
     if (onChange) {
       onChange(syntheticEvent);
     }
-    
+
     // Sync native select
     const nativeSelect = document.getElementById(id);
     if (nativeSelect) {
       nativeSelect.value = optionValue;
-      // Trigger change event on native select to ensure form submission works
       const changeEvent = new Event('change', { bubbles: true });
       nativeSelect.dispatchEvent(changeEvent);
     }
   };
-  
+
   // Sync custom dropdown when native select changes (fallback)
   useEffect(() => {
     const nativeSelect = document.getElementById(id);
@@ -84,7 +83,7 @@ const CustomDropdown = ({
       };
     }
   }, [id, name, onChange]);
-  
+
   // Ensure native select value stays in sync with prop value
   useEffect(() => {
     const nativeSelect = document.getElementById(id);
@@ -97,9 +96,11 @@ const CustomDropdown = ({
 
   return (
     <div className={`custom-dropdown-wrapper ${className}`} ref={dropdownRef}>
-      <label htmlFor={id} className="custom-dropdown-label">
+      {/* add the same helper class used by form labels to ensure identical styling */}
+      <label htmlFor={id} className="custom-dropdown-label form-label">
         {label}
       </label>
+
       {/* Native select as fallback - visually hidden but functional */}
       <select
         id={id}
@@ -115,6 +116,7 @@ const CustomDropdown = ({
           </option>
         ))}
       </select>
+
       {/* Custom styled dropdown */}
       <div className="custom-dropdown">
         <button
@@ -164,10 +166,10 @@ const CustomDropdown = ({
           {isOpen && (
             <motion.div
               className="custom-dropdown-menu"
-              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              initial={{ opacity: 0, y: -10, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.95 }}
-              transition={{ duration: 0.2, ease: 'easeOut' }}
+              exit={{ opacity: 0, y: -10, scale: 0.98 }}
+              transition={{ duration: 0.18, ease: 'easeOut' }}
               role="listbox"
             >
               {options.map((option) => (
@@ -183,7 +185,7 @@ const CustomDropdown = ({
                     }
                     handleSelect(option.value);
                   }}
-                  whileHover={{ backgroundColor: 'rgba(212, 175, 55, 0.1)' }}
+                  whileHover={{ backgroundColor: 'rgba(212, 175, 55, 0.06)' }}
                   whileTap={{ scale: 0.98 }}
                   role="option"
                   aria-selected={value === option.value}
@@ -199,7 +201,7 @@ const CustomDropdown = ({
                       className="dropdown-check"
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      transition={{ duration: 0.2 }}
+                      transition={{ duration: 0.18 }}
                     >
                       <path
                         d="M13.5 4.5L6 12L2.5 8.5"
@@ -221,4 +223,3 @@ const CustomDropdown = ({
 };
 
 export default CustomDropdown;
-
