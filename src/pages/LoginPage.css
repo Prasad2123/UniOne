@@ -105,6 +105,16 @@
   margin-top: -0.25rem;
 }
 
+.error-banner {
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  background: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+  border: 1px solid rgba(231, 76, 60, 0.4);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
 .form-options {
   display: flex;
   justify-content: space-between;

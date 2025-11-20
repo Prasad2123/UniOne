@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import CustomDropdown from '../components/CustomDropdown';
+import { login } from '../services/auth';
+import { useAuth } from '../context/AuthContext';
 import './LoginPage.css';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
     role: 'Student',
     email: '',
@@ -15,6 +18,14 @@ const LoginPage = () => {
     rememberMe: false,
   });
   const [errors, setErrors] = useState({});
+  const [authError, setAuthError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -31,9 +42,26 @@ const LoginPage = () => {
     if (errors[name]) {
       setErrors({ ...errors, [name]: '' });
     }
+    if (authError) {
+      setAuthError('');
+    }
   };
 
-  const handleSubmit = (e) => {
+  const getFriendlyErrorMessage = (message) => {
+    if (!message) return 'Unable to login. Please try again.';
+    if (message.includes('auth/invalid-credential')) {
+      return 'Incorrect email or password.';
+    }
+    if (message.includes('auth/user-disabled')) {
+      return 'Your account has been disabled. Contact support.';
+    }
+    if (message.includes('auth/too-many-requests')) {
+      return 'Too many attempts. Please wait and try again.';
+    }
+    return 'Unable to login. Please try again.';
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
 
@@ -52,15 +80,17 @@ const LoginPage = () => {
       return;
     }
 
-    // Here you would typically make an API call
-    // Include role in the API payload
-    const loginPayload = {
-      ...formData,
-      role: formData.role.toLowerCase(),
-    };
-    console.log('Login attempt:', loginPayload);
-    // Navigate to home or dashboard (placeholder)
-    // navigate('/');
+    setIsSubmitting(true);
+    setAuthError('');
+
+    try {
+      await login(formData.email, formData.password, formData.rememberMe);
+      navigate('/');
+    } catch (error) {
+      setAuthError(getFriendlyErrorMessage(error.message));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -138,15 +168,22 @@ const LoginPage = () => {
             <motion.button
               type="submit"
               className="login-button"
+              disabled={isSubmitting}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              Login
+              {isSubmitting ? 'Logging in...' : 'Login'}
             </motion.button>
 
             <div className="login-divider">
               <span>or</span>
             </div>
+
+            {authError && (
+              <div className="error-banner" role="alert">
+                {authError}
+              </div>
+            )}
 
             <button
               type="button"

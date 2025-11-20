@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import CustomDropdown from '../components/CustomDropdown';
+import { signup as signupWithFirebase } from '../services/auth';
 import './SignupPage.css';
 
 const SignupPage = () => {
@@ -20,6 +21,8 @@ const SignupPage = () => {
     department: '',
   });
   const [errors, setErrors] = useState({});
+  const [serverError, setServerError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -32,9 +35,23 @@ const SignupPage = () => {
     if (errors[name]) {
       setErrors({ ...errors, [name]: '' });
     }
+    if (serverError) {
+      setServerError('');
+    }
   };
 
-  const handleSubmit = (e) => {
+  const getFriendlyErrorMessage = (message) => {
+    if (!message) return 'Unable to create your account. Please try again.';
+    if (message.includes('auth/email-already-in-use')) {
+      return 'This email is already registered. Try logging in.';
+    }
+    if (message.includes('auth/weak-password')) {
+      return 'Password should be at least 6 characters.';
+    }
+    return 'Unable to create your account. Please try again.';
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
 
@@ -79,21 +96,26 @@ const SignupPage = () => {
       return;
     }
 
-    // Here you would typically make an API call
-    // Include role and role-specific fields in the payload
-    const signupPayload = {
-      role: formData.role.toLowerCase(),
-      fullName: formData.fullName,
-      email: formData.email,
-      password: formData.password,
-      ...(formData.role === 'Student' 
-        ? { studentId: formData.studentId, course: formData.course }
-        : { employeeId: formData.employeeId, department: formData.department }
-      ),
-    };
-    console.log('Signup attempt:', signupPayload);
-    // Navigate to login or dashboard
-    // navigate('/login');
+    setIsSubmitting(true);
+    setServerError('');
+
+    try {
+      await signupWithFirebase({
+        role: formData.role,
+        fullName: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+        studentId: formData.studentId,
+        course: formData.course,
+        employeeId: formData.employeeId,
+        department: formData.department,
+      });
+      navigate('/login', { replace: true });
+    } catch (error) {
+      setServerError(getFriendlyErrorMessage(error.message));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -264,11 +286,18 @@ const SignupPage = () => {
             <motion.button
               type="submit"
               className="signup-button"
+              disabled={isSubmitting}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              Create Account
+              {isSubmitting ? 'Creating account...' : 'Create Account'}
             </motion.button>
+
+            {serverError && (
+              <div className="error-banner" role="alert">
+                {serverError}
+              </div>
+            )}
 
             <div className="signup-divider">
               <span>or</span>

@@ -3,19 +3,32 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { requestPasswordReset } from '../services/auth';
 import './ForgotPasswordPage.css';
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
   };
 
-  const handleSubmit = (e) => {
+  const getFriendlyErrorMessage = (message) => {
+    if (!message) return 'Unable to send reset link. Please try again.';
+    if (message.includes('auth/user-not-found')) {
+      return 'No account found for this email.';
+    }
+    if (message.includes('auth/too-many-requests')) {
+      return 'Too many attempts. Please wait and try again.';
+    }
+    return 'Unable to send reset link. Please try again.';
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!email) {
@@ -26,10 +39,17 @@ const ForgotPasswordPage = () => {
       return;
     }
 
-    // Here you would typically make an API call
-    console.log('Password reset requested for:', email);
-    setSubmitted(true);
+    setIsSubmitting(true);
     setError('');
+
+    try {
+      await requestPasswordReset(email);
+      setSubmitted(true);
+    } catch (err) {
+      setError(getFriendlyErrorMessage(err.message));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -74,10 +94,11 @@ const ForgotPasswordPage = () => {
               <motion.button
                 type="submit"
                 className="reset-button"
+                disabled={isSubmitting}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                Send Reset Link
+                {isSubmitting ? 'Sending...' : 'Send Reset Link'}
               </motion.button>
             </form>
           )}
