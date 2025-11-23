@@ -2,10 +2,16 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
 }
 
 .landing-main {
   flex: 1;
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
 }
 
 .hero {
@@ -14,6 +20,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
 }
 
 .hero-container {
@@ -23,6 +32,8 @@
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   align-items: center;
+  width: 100%;
+  position: relative;
 }
 
 .hero__content {
@@ -106,9 +117,15 @@
   transition: left 0.5s ease;
 }
 
+.hero__cta {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
 .hero__cta:hover {
   box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6), 0 0 20px rgba(212, 175, 55, 0.4);
-  transform: translateY(-2px);
+  transform: translateY(-2px) translateZ(0);
 }
 
 .hero__cta:hover::before {

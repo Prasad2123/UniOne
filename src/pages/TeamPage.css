@@ -95,9 +95,54 @@
   font-size: 1rem;
   color: var(--gold);
   font-weight: 500;
-  margin: 0 auto;
+  margin: 0 auto 1rem;
   max-width: 18ch;
   min-height: 2.5rem; /* keeps role text height consistent */
+}
+
+.team-quote {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  opacity: 0.85;
+  font-style: italic;
+  line-height: 1.6;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.team-community {
+  margin-top: 5rem;
+  padding-top: 4rem;
+  border-top: 2px solid rgba(212, 175, 55, 0.2);
+  text-align: center;
+}
+
+.team-community-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+}
+
+.team-community-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: var(--text-primary);
+  opacity: 0.9;
+  margin-bottom: 1.5rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: justify;
+}
+
+.team-community-text strong {
+  color: var(--gold);
+  font-weight: 600;
 }
 
 @media (max-width: 1024px) {
@@ -133,6 +178,20 @@
   .team-image {
     width: 150px;
     height: 150px;
+  }
+
+  .team-community {
+    margin-top: 3rem;
+    padding-top: 2rem;
+  }
+
+  .team-community-title {
+    font-size: 1.5rem;
+  }
+
+  .team-community-text {
+    font-size: 1rem;
+    text-align: left;
   }
 }
 

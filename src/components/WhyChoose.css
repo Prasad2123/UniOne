@@ -2,6 +2,9 @@
   padding: 5rem 2rem;
   background-color: var(--bg-primary);
   transition: var(--transition);
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
 }
 
 .why-choose-container {
@@ -26,6 +29,9 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .why-choose-card {
@@ -33,15 +39,20 @@
   padding: 2.5rem 2rem;
   border-radius: 20px;
   text-align: center;
-  transition: var(--transition);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid rgba(212, 175, 55, 0.1);
   cursor: pointer;
+  position: relative;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  contain: layout style paint;
 }
 
 .why-choose-card:hover {
   border-color: rgba(212, 175, 55, 0.3);
   box-shadow: 0 10px 30px var(--shadow);
-  transform: translateY(-10px);
+  transform: translateY(-10px) translateZ(0);
 }
 
 .why-choose-icon {

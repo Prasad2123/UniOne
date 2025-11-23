@@ -4,19 +4,19 @@ import './WhyChoose.css';
 const WhyChoose = () => {
   const features = [
     {
-      icon: '📝',
-      title: 'Smart Notes',
-      description: 'Quick, organized study materials for fast and focused learning.',
+      icon: '🧠',
+      title: 'Intelligent Note Generation',
+      description: 'Transform your lectures and study materials into smart, structured, and auto-summarized notes — ready to revise anytime.',
     },
     {
-      icon: '🤖',
-      title: 'PYQs Helper',
-      description: 'Get instant, accurate answers to previous year questions.',
+      icon: '💡',
+      title: 'Strategic PYQ Analysis',
+      description: 'Access AI-generated explanations and context-aware solutions for Previous Year Questions to identify patterns, improve accuracy, and boost your performance.',
     },
     {
       icon: '⚡',
-      title: 'Fast & Reliable',
-      description: 'Smooth, responsive, and built for a hassle-free experience.',
+      title: 'Real-Time Data & Insights',
+      description: 'Get instant updates on quiz scores, peer comparisons, progress analytics, and important academic changes — all in one unified dashboard.',
     },
   ];
 

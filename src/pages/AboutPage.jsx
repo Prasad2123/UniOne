@@ -29,80 +29,165 @@ const AboutPage = () => {
           <div className="about-container">
             <h1 className="about-title">About UniOne</h1>
             <p className="about-text">
-              UniOne is an AI-powered academic platform designed to simplify your learning journey. 
-              We combine cutting-edge technology with intuitive design to help students excel in their studies.
+              UniOne is a next-generation academic platform engineered for today's fast-paced education system. Our proprietary AI transforms complexity into clarity, enabling students to understand, organize, and master their curriculum with precision.
             </p>
             <p className="about-text">
-              Our mission is to make quality education accessible, organized, and efficient through 
-              smart tools that adapt to your learning style.
+              Our mission is to democratize smart learning by making personalized, high-quality education accessible and hyper-efficient. Every tool we create evolves dynamically with your learning style — ensuring that you always study smarter, not harder.
             </p>
           </div>
         </motion.section>
 
         <SectionDivider />
 
-        {/* Section 2: Why UniOne */}
+        {/* Section 4: What Makes UniOne Different */}
         <motion.section
-          className="about-section why-section"
+          className="about-section different-section"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
         >
           <div className="about-container">
-            <div className="why-content">
-              <div className="why-text">
-                <h2 className="section-title">Why UniOne?</h2>
-                <p className="about-text">
-                  We understand the challenges students face in today's fast-paced academic environment. 
-                  That's why we've built a platform that combines intelligent automation with user-friendly design.
-                </p>
-                <p className="about-text">
-                  From smart note-taking to AI-powered question answering, UniOne provides everything 
-                  you need to succeed academically, all in one place.
-                </p>
-              </div>
-              <div className="why-image">
-                <div className="placeholder-image">📚</div>
-              </div>
+            <h2 className="section-title">What Makes UniOne Different</h2>
+            <h3 className="section-subtitle">Why UniOne Stands Out</h3>
+            <div className="feature-content">
+              <p className="about-text">
+                UniOne isn't just another study app — it's a complete academic ecosystem powered by intelligent automation.
+                We combine data-driven insights, personalized assistance, and real-time updates to create a learning environment that adapts to you.
+              </p>
+              <p className="about-text">
+                UniOne removes the guesswork from studying by delivering the right information at the right time, ensuring every student learns with clarity and confidence.
+              </p>
             </div>
           </div>
         </motion.section>
 
         <SectionDivider />
 
-        {/* Section 3: AI-Powered Tools */}
+        {/* Section 5: Built for Every Type of Learner */}
         <motion.section
-          className="about-section tools-section"
+          className="about-section learner-section"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
         >
           <div className="about-container">
-            <h2 className="section-title">AI-Powered Tools</h2>
-            <div className="tools-grid">
-              <div className="tool-card">
-                <div className="tool-icon">🧠</div>
-                <h3 className="tool-title">Smart Notes</h3>
-                <p className="tool-description">
-                  Automatically organize and structure your study materials for maximum efficiency.
+            <h2 className="section-title">Built for Every Type of Learner</h2>
+            <h3 className="section-subtitle">Designed for Modern Students</h3>
+            <div className="feature-content">
+              <p className="about-text">
+                Whether you're preparing for exams, catching up on missed lectures, or revising last-minute, UniOne ensures you always have structured and accurate material ready.
+                No clutter. No confusion. Just clarity and confidence.
+              </p>
+              <p className="about-text">
+                UniOne supports slow learners, fast learners, and self-paced learners alike by giving personalized, easy-to-understand study experiences tailored to individual needs.
+              </p>
+            </div>
+          </div>
+        </motion.section>
+
+        <SectionDivider />
+
+        {/* Section 6: Our Core Principles */}
+        <motion.section
+          className="about-section principles-section"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
+          <div className="about-container">
+            <h2 className="section-title">Our Core Principles</h2>
+            <div className="principles-grid">
+              <motion.div
+                className="principle-card"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                whileHover={{ y: -8, scale: 1.02 }}
+              >
+                <div className="principle-icon">🔒</div>
+                <h3 className="principle-title">Transparency & Trust</h3>
+                <p className="principle-text">
+                  We follow ethical AI practices with complete transparency and zero compromise on data integrity, ensuring your academic data is always safe.
                 </p>
-              </div>
-              <div className="tool-card">
-                <div className="tool-icon">💡</div>
-                <h3 className="tool-title">PYQs Helper</h3>
-                <p className="tool-description">
-                  Get instant, accurate answers to previous year questions with AI assistance.
+              </motion.div>
+              <motion.div
+                className="principle-card"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                whileHover={{ y: -8, scale: 1.02 }}
+              >
+                <div className="principle-icon">⚙️</div>
+                <h3 className="principle-title">Continuous Innovation</h3>
+                <p className="principle-text">
+                  Our team constantly enhances UniOne with smarter models, faster performance, and richer features so that the platform evolves with the needs of students.
                 </p>
-              </div>
-              <div className="tool-card">
-                <div className="tool-icon">⚡</div>
-                <h3 className="tool-title">Fast & Reliable</h3>
-                <p className="tool-description">
-                  Experience lightning-fast performance with 99.9% uptime guarantee.
+              </motion.div>
+              <motion.div
+                className="principle-card"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                whileHover={{ y: -8, scale: 1.02 }}
+              >
+                <div className="principle-icon">📈</div>
+                <h3 className="principle-title">Student Success First</h3>
+                <p className="principle-text">
+                  Every feature is designed to reduce your workload, save hours of study time, and help you improve academic performance with minimal effort.
                 </p>
-              </div>
+              </motion.div>
+            </div>
+          </div>
+        </motion.section>
+
+        <SectionDivider />
+
+        {/* Section 7: Your All-in-One Academic Companion */}
+        <motion.section
+          className="about-section companion-section"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
+          <div className="about-container">
+            <h2 className="section-title">Your All-in-One Academic Companion</h2>
+            <div className="feature-content">
+              <p className="about-text">
+                UniOne intelligently centralizes everything — notes, PYQs, quiz insights, and study progress — so you never waste time switching between apps or searching for scattered materials. Everything you need to learn efficiently is available in one seamless experience.
+              </p>
+              <p className="about-text">
+                Think of UniOne as your personal academic hub, always organized, always ready, always accurate.
+              </p>
+            </div>
+          </div>
+        </motion.section>
+
+        <SectionDivider />
+
+        {/* Section 8: The Future of Learning */}
+        <motion.section
+          className="about-section future-section"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
+          <div className="about-container">
+            <h2 className="section-title">The Future of Learning</h2>
+            <div className="feature-content">
+              <p className="about-text">
+                With UniOne, education becomes personalized, predictive, and proactive. Our goal is to build a future where AI helps every student learn with clarity, speed, and confidence.
+              </p>
+              <p className="about-text">
+                UniOne represents the next evolution of digital education — where smart tools and real-time intelligence work together to guide your academic success.
+              </p>
             </div>
           </div>
         </motion.section>

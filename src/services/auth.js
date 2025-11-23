@@ -25,13 +25,15 @@ const buildProfilePayload = (data) => {
     role: data.role,
     fullName: data.fullName,
     email: data.email,
+    university: data.university ?? "",
+    college: data.college ?? "",
+    course: data.courseDropdown ?? "", // Course from dropdown (applies to all roles)
   };
 
   if (data.role === "Student") {
     return {
       ...common,
       studentId: data.studentId ?? "",
-      course: data.course ?? "",
     };
   }
 

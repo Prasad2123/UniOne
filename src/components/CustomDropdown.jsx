@@ -10,26 +10,32 @@ const CustomDropdown = ({
   options,
   label,
   ariaLabel,
-  className = ''
+  className = '',
+  disabled = false
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   useEffect(() => {
+    if (!isOpen) return;
+
     const handleClickOutside = (event) => {
+      // Check if click is outside the dropdown
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
       }
     };
 
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-      document.addEventListener('touchstart', handleClickOutside);
-    }
+    // Add event listeners with a small delay to avoid immediate closing
+    const timeoutId = setTimeout(() => {
+      document.addEventListener('mousedown', handleClickOutside, true);
+      document.addEventListener('touchstart', handleClickOutside, true);
+    }, 100);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('touchstart', handleClickOutside);
+      clearTimeout(timeoutId);
+      document.removeEventListener('mousedown', handleClickOutside, true);
+      document.removeEventListener('touchstart', handleClickOutside, true);
     };
   }, [isOpen]);
 
@@ -92,10 +98,10 @@ const CustomDropdown = ({
     }
   }, [id, value]);
 
-  const selectedOption = options.find(opt => opt.value === value) || options[0];
+  const selectedOption = options.find(opt => opt.value === value) || options[0] || { value: '', label: disabled ? 'Select...' : 'Select an option', icon: null };
 
   return (
-    <div className={`custom-dropdown-wrapper ${className}`} ref={dropdownRef}>
+    <div className={`custom-dropdown-wrapper ${isOpen ? 'dropdown-open' : ''} ${className}`} ref={dropdownRef}>
       {/* add the same helper class used by form labels to ensure identical styling */}
       <label htmlFor={id} className="custom-dropdown-label form-label">
         {label}
@@ -105,24 +111,34 @@ const CustomDropdown = ({
       <select
         id={id}
         name={name}
-        value={value}
+        value={value || ''}
         onChange={onChange}
         className="custom-dropdown-native"
         aria-label={ariaLabel}
+        disabled={disabled}
       >
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
+        {options.length > 0 ? (
+          options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))
+        ) : (
+          <option value="">Select...</option>
+        )}
       </select>
 
       {/* Custom styled dropdown */}
       <div className="custom-dropdown">
         <button
           type="button"
-          className={`custom-dropdown-button ${isOpen ? 'open' : ''}`}
+          className={`custom-dropdown-button ${isOpen ? 'open' : ''} ${disabled ? 'disabled' : ''}`}
           onClick={(e) => {
+            if (disabled || options.length === 0) {
+              e.preventDefault();
+              e.stopPropagation();
+              return;
+            }
             e.preventDefault();
             e.stopPropagation();
             if (e.nativeEvent) {
@@ -133,7 +149,9 @@ const CustomDropdown = ({
           aria-label={ariaLabel}
           aria-expanded={isOpen}
           aria-haspopup="listbox"
+          disabled={disabled}
           onKeyDown={(e) => {
+            if (disabled || options.length === 0) return;
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               e.stopPropagation();
@@ -162,8 +180,8 @@ const CustomDropdown = ({
             />
           </motion.svg>
         </button>
-        <AnimatePresence>
-          {isOpen && (
+        <AnimatePresence mode="wait">
+          {isOpen && options.length > 0 && (
             <motion.div
               className="custom-dropdown-menu"
               initial={{ opacity: 0, y: -10, scale: 0.98 }}
@@ -171,6 +189,9 @@ const CustomDropdown = ({
               exit={{ opacity: 0, y: -10, scale: 0.98 }}
               transition={{ duration: 0.18, ease: 'easeOut' }}
               role="listbox"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
             >
               {options.map((option) => (
                 <motion.button

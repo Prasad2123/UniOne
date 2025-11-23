@@ -53,12 +53,22 @@
     color: var(--text-primary);
     transition: var(--transition);
     min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  html {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
   }
 
   #root {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    overflow-x: hidden;
+    position: relative;
   }
 
   a {
