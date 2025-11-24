@@ -143,12 +143,11 @@ const SignupPage = () => {
     password: '',
     confirmPassword: '',
     studentId: '',
-    course: '',
     employeeId: '',
     department: '',
     university: '',
     college: '',
-    courseDropdown: '', // Renamed to avoid conflict with existing course field
+    courseDropdown: '',
   });
   const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState('');
@@ -287,7 +286,6 @@ const SignupPage = () => {
         email: formData.email,
         password: formData.password,
         studentId: formData.studentId,
-        course: formData.course,
         employeeId: formData.employeeId,
         department: formData.department,
         university: formData.university,
@@ -307,7 +305,6 @@ const SignupPage = () => {
         password: '',
         confirmPassword: '',
         studentId: '',
-        course: '',
         employeeId: '',
         department: '',
         university: '',
@@ -556,20 +553,6 @@ const SignupPage = () => {
                       placeholder="Enter your student ID"
                     />
                     {errors.studentId && <span className="error-message">{errors.studentId}</span>}
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="course" className="form-label">Course</label>
-                    <input
-                      type="text"
-                      id="course"
-                      name="course"
-                      value={formData.course}
-                      onChange={handleChange}
-                      className={errors.course ? 'input-error' : ''}
-                      placeholder="Enter your course"
-                    />
-                    {errors.course && <span className="error-message">{errors.course}</span>}
                   </div>
                 </motion.div>
               )}
