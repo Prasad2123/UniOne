@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from '../firebase';
 import DashboardNavbar from '../components/DashboardNavbar';
 import Footer from '../components/Footer';
 import AnnouncementCard from '../components/AnnouncementCard';
+import CustomDropdown from '../components/CustomDropdown';
 import './DashboardPage.css';
 import './ProfilePage.css';
 
@@ -35,9 +36,20 @@ const FALLBACK_ANNOUNCEMENTS = [
   },
 ];
 
+const UNIVERSITY_OPTIONS = [
+  { value: '', label: 'All Universities' },
+  { value: 'ABC University', label: 'ABC University' },
+  { value: 'XYZ Institute of Technology', label: 'XYZ Institute of Technology' },
+  { value: 'National College of Engineering', label: 'National College of Engineering' },
+];
+
 const Announcements = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [filters, setFilters] = useState({
+    university: '',
+    query: '',
+  });
 
   useEffect(() => {
     const fetchAnnouncements = async () => {
@@ -60,6 +72,39 @@ const Announcements = () => {
 
     fetchAnnouncements();
   }, []);
+
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const allAnnouncements = useMemo(
+    () => (items.length > 0 ? items : FALLBACK_ANNOUNCEMENTS),
+    [items]
+  );
+
+  const filteredAnnouncements = useMemo(() => {
+    const { university, query: searchQuery } = filters;
+    const q = searchQuery.trim().toLowerCase();
+
+    return allAnnouncements.filter((item) => {
+      const uniMatch =
+        !university ||
+        !item.university ||
+        item.university.toLowerCase() === university.toLowerCase();
+
+      if (!q) return uniMatch;
+
+      const haystack = `${item.title || ''} ${item.description || ''} ${
+        item.category || ''
+      }`.toLowerCase();
+
+      return uniMatch && haystack.includes(q);
+    });
+  }, [allAnnouncements, filters]);
 
   return (
     <div className="profile-page">
@@ -84,11 +129,44 @@ const Announcements = () => {
               Stay informed with real-time academic updates.
             </p>
 
+            <div className="announcements-filters-row">
+              <div className="announcements-filters-left">
+                <CustomDropdown
+                  id="university"
+                  name="university"
+                  value={filters.university}
+                  onChange={handleFilterChange}
+                  label="University"
+                  ariaLabel="Filter by university"
+                  options={UNIVERSITY_OPTIONS}
+                />
+              </div>
+
+              <div className="announcements-filters-right">
+                <label htmlFor="announcement-search" className="form-label">
+                  Search
+                </label>
+                <input
+                  id="announcement-search"
+                  name="query"
+                  type="text"
+                  className="announcements-search-input"
+                  placeholder="Search announcements..."
+                  value={filters.query}
+                  onChange={handleFilterChange}
+                />
+              </div>
+            </div>
+
             {loading ? (
               <p className="dashboard-card__description">Loading announcements...</p>
+            ) : filteredAnnouncements.length === 0 ? (
+              <p className="dashboard-card__description">
+                No announcements match your filters.
+              </p>
             ) : (
               <div className="profile-form" style={{ gap: '1.25rem' }}>
-                {(items.length > 0 ? items : FALLBACK_ANNOUNCEMENTS).map((item) => (
+                {filteredAnnouncements.map((item) => (
                   <AnnouncementCard
                     key={item.id}
                     title={item.title || 'Announcement'}
