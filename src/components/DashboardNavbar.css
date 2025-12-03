@@ -4,7 +4,7 @@
   /* Reuse base navbar theme but ensure dashboard nav sits above content */
   position: sticky;
   top: 0;
-  z-index: 1300;
+  z-index: 9500;
 }
 
 .navbar-menu--dashboard {
@@ -123,6 +123,7 @@
   padding: 0.75rem;
   color: var(--text-primary);
   backdrop-filter: blur(20px);
+  z-index: 10000;
 }
 
 [data-theme='light'] .dashboard-nav__dropdown {

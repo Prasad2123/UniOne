@@ -11,6 +11,13 @@ import './ProfilePage.css';
 
 const YEARS = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
 const PATTERNS = ['Winter', 'Summer', 'Midterm', 'Unit Test'];
+const FALLBACK_SUBJECTS = [
+  'Mathematics I',
+  'Physics',
+  'Chemistry',
+  'Computer Programming',
+  'Data Structures',
+];
 
 const PYQs = () => {
   const { profile } = useAuth();
@@ -111,11 +118,22 @@ const PYQs = () => {
     label: s.name || s.subject || '',
   }));
 
+  const displaySubjectOptions =
+    subjectOptions.length > 0
+      ? subjectOptions
+      : FALLBACK_SUBJECTS.map((name) => ({ value: name, label: name }));
+
   return (
     <div className="profile-page">
       <DashboardNavbar />
       <main className="profile-main">
-        <div className="profile-container">
+        <div
+          className="profile-container"
+          style={{
+            maxWidth: '1100px',
+            gridTemplateColumns: 'minmax(0, 1fr)',
+          }}
+        >
           <motion.section
             className="profile-card"
             initial={{ opacity: 0, y: 24 }}
@@ -128,7 +146,7 @@ const PYQs = () => {
             </p>
 
             <div className="profile-form" style={{ gap: '1rem' }}>
-              <div className="profile-grid">
+              <div className="profile-grid smartnotes-filter-grid">
                 <div className="form-group">
                   <label className="form-label" htmlFor="department">
                     Department
@@ -149,8 +167,8 @@ const PYQs = () => {
                   onChange={handleFilterChange}
                   label="Subject"
                   ariaLabel="Select subject"
-                  options={subjectOptions}
-                  disabled={loadingSubjects || subjectOptions.length === 0}
+                  options={displaySubjectOptions}
+                  disabled={loadingSubjects || displaySubjectOptions.length === 0}
                 />
 
                 <CustomDropdown

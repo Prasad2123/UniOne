@@ -2,7 +2,7 @@
   width: 100%;
   position: sticky;
   top: 0;
-  z-index: 1200;
+  z-index: 9000;
   contain: layout style paint;
   background-color: var(--nav-surface);
   backdrop-filter: blur(10px);

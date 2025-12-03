@@ -91,12 +91,12 @@
 
 .custom-dropdown-button {
   width: 100%;
-  padding: 1rem 1.25rem;
+  padding: 1.1rem 1.4rem;
   border: 2px solid rgba(212, 175, 55, 0.25);
   border-radius: 12px;
   background: var(--bg-secondary);
   color: var(--text-primary);
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-family: 'Inter', sans-serif;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -199,11 +199,11 @@
 
 .custom-dropdown-option {
   width: 100%;
-  padding: 0.875rem 1rem;
+  padding: 1rem 1.15rem;
   background: transparent;
   border: none;
   color: var(--text-primary);
-  font-size: 1rem;
+  font-size: 1.02rem;
   font-family: 'Inter', sans-serif;
   cursor: pointer;
   display: flex;
@@ -236,12 +236,12 @@
 
 @media (max-width: 768px) {
   .custom-dropdown-button {
-    padding: 0.875rem 1rem;
-    font-size: 0.95rem;
+    padding: 0.95rem 1.05rem;
+    font-size: 1rem;
   }
 
   .custom-dropdown-option {
-    padding: 0.875rem 1rem;
-    font-size: 0.95rem;
+    padding: 0.9rem 1.05rem;
+    font-size: 0.98rem;
   }
 }

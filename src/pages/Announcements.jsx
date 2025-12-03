@@ -8,6 +8,33 @@ import AnnouncementCard from '../components/AnnouncementCard';
 import './DashboardPage.css';
 import './ProfilePage.css';
 
+const FALLBACK_ANNOUNCEMENTS = [
+  {
+    id: 'sample-1',
+    title: 'Mid-Semester Exams Schedule Released',
+    description:
+      'The detailed timetable for the mid-semester examinations is now available on the college portal. Please check your subjects and exam centers carefully.',
+    date: new Date().toISOString(),
+    category: 'Exams',
+  },
+  {
+    id: 'sample-2',
+    title: 'Library Extended Hours This Week',
+    description:
+      'To support exam preparation, the central library will remain open till 11:30 PM from Monday to Friday. Carry your college ID card at all times.',
+    date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    category: 'Notice',
+  },
+  {
+    id: 'sample-3',
+    title: 'Guest Lecture on AI in Education',
+    description:
+      'Join us for a special session on “AI-powered Learning Tools” by industry experts this Saturday at 10:00 AM in Seminar Hall B. Limited seats available.',
+    date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    category: 'Event',
+  },
+];
+
 const Announcements = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -38,9 +65,16 @@ const Announcements = () => {
     <div className="profile-page">
       <DashboardNavbar />
       <main className="profile-main">
-        <div className="profile-container" style={{ maxWidth: '900px' }}>
+        <div
+          className="profile-container"
+          style={{
+            maxWidth: '1100px',
+            gridTemplateColumns: 'minmax(0, 1fr)',
+          }}
+        >
           <motion.section
             className="profile-card"
+            style={{ minHeight: '60vh' }}
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45 }}
@@ -52,13 +86,9 @@ const Announcements = () => {
 
             {loading ? (
               <p className="dashboard-card__description">Loading announcements...</p>
-            ) : items.length === 0 ? (
-              <p className="dashboard-card__description">
-                No announcements available at the moment.
-              </p>
             ) : (
               <div className="profile-form" style={{ gap: '1.25rem' }}>
-                {items.map((item) => (
+                {(items.length > 0 ? items : FALLBACK_ANNOUNCEMENTS).map((item) => (
                   <AnnouncementCard
                     key={item.id}
                     title={item.title || 'Announcement'}
