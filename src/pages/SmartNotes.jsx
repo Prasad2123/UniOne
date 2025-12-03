@@ -136,6 +136,7 @@ const SmartNotes = () => {
         >
           <motion.section
             className="profile-card"
+            style={{ minHeight: '75vh' }}
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45 }}

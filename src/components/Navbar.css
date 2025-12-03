@@ -3,7 +3,9 @@
   position: sticky;
   top: 0;
   z-index: 9000;
-  contain: layout style paint;
+  /* Remove paint containment so dropdowns (notifications/profile) can render
+     outside the navbar without being clipped */
+  contain: layout style;
   background-color: var(--nav-surface);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
