@@ -15,6 +15,10 @@ import FAQsPage from "./pages/FAQsPage";
 import HelpPage from "./pages/HelpPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
+import ProfilePage from "./pages/ProfilePage";
+import SmartNotes from "./pages/SmartNotes";
+import PYQs from "./pages/PYQs";
+import Announcements from "./pages/Announcements";
 
 import SplashScreen from "./components/SplashScreen";
 
@@ -78,6 +82,10 @@ function App() {
               <Route path="/help" element={<HelpPage />} />
               <Route path="/privacy" element={<PrivacyPage />} />
               <Route path="/terms" element={<TermsPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/smart-notes" element={<SmartNotes />} />
+              <Route path="/pyqs" element={<PYQs />} />
+              <Route path="/announcements" element={<Announcements />} />
             </Routes>
           </Router>
         </div>

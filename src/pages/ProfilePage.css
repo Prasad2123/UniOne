@@ -1,0 +1,93 @@
+.profile-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-main {
+  flex: 1;
+  padding: 2.5rem 1.75rem 3rem;
+}
+
+.profile-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1.5fr);
+  gap: 2.5rem;
+}
+
+.profile-card {
+  background: var(--bg-primary);
+  border-radius: 22px;
+  padding: 2rem 1.75rem 2.25rem;
+  border: 1px solid rgba(212, 175, 55, 0.12);
+  box-shadow: 0 10px 30px var(--shadow);
+}
+
+.profile-title {
+  font-size: calc(var(--font-lg) * 1.4);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+}
+
+.profile-subtitle {
+  font-size: var(--font-md);
+  color: var(--text-primary);
+  opacity: 0.75;
+  margin-bottom: 1.5rem;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem 1.5rem;
+}
+
+/* Smart Notes filter bar: four filters in a single horizontal row on larger screens */
+.smartnotes-filter-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: flex-end;
+}
+
+.profile-save-button {
+  margin-top: 1rem;
+  align-self: flex-start;
+}
+
+@media (max-width: 1024px) {
+  .profile-container {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .smartnotes-filter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-main {
+    padding: 2rem 1rem 2.5rem;
+  }
+
+  .profile-card {
+    padding: 1.75rem 1.5rem 2rem;
+  }
+
+  .profile-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .smartnotes-filter-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+

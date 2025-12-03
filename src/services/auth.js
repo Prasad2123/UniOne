@@ -155,6 +155,16 @@ export const createUserProfile = async (uid, profile) => {
   }
 };
 
+export const updateUserProfile = async (uid, updates) => {
+  const profileRef = doc(db, "profiles", uid);
+  const payload = {
+    ...updates,
+    updatedAt: serverTimestamp(),
+  };
+  await setDoc(profileRef, payload, { merge: true });
+  return payload;
+};
+
 export const signup = async (payload) => {
   let userCredential = null;
   const emailLower = payload.email.toLowerCase();

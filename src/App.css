@@ -19,6 +19,11 @@
     --gold: #D4AF37;
     --shadow-light: rgba(0, 0, 0, 0.1);
 
+    /* Typography scale */
+    --font-lg: 1.25rem;  /* large headings */
+    --font-md: 1.05rem;  /* body / subtitles */
+    --font-sm: 0.92rem;  /* meta / labels */
+
     /* Dark Mode */
     --bg-dark: #1C140A;
     --text-dark: #F5F5F5;

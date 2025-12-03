@@ -2,66 +2,9 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-}
-
-.dashboard-navbar {
-  background: var(--bg-primary);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-  padding: 1rem 0;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-.dashboard-navbar-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.dashboard-navbar-brand {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  text-decoration: none;
-  color: var(--text-primary);
-  font-size: 1.5rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.dashboard-navbar-logo {
-  font-size: 2rem;
-}
-
-.dashboard-navbar-brand-text {
-  background: linear-gradient(135deg, var(--text-primary), var(--gold));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.dashboard-logout-button {
-  padding: 0.625rem 1.5rem;
-  background: var(--gold);
-  color: #1a1a1a;
-  border: none;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.dashboard-logout-button:hover {
-  background: #d4af37;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+  background: radial-gradient(circle at top left, rgba(212, 175, 55, 0.08), transparent 45%),
+    radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.14), transparent 50%),
+    linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
 }
 
 .dashboard-loading {
@@ -75,118 +18,43 @@
 
 .dashboard-main {
   flex: 1;
-  padding: 3rem 2rem;
+  padding: 2.5rem 1.75rem 3rem;
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
 }
 
-.dashboard-content {
-  width: 100%;
+.dashboard-hero {
+  margin-bottom: 2.25rem;
 }
 
-.dashboard-welcome {
-  font-size: 2.5rem;
-  font-weight: 700;
+.dashboard-eyebrow {
+  font-size: var(--font-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
   color: var(--text-primary);
-  margin-bottom: 0.5rem;
-  text-align: center;
+  opacity: 0.7;
+  margin-bottom: 0.35rem;
+}
+
+.dashboard-title {
+  font-size: calc(var(--font-lg) * 2.1);
+  font-weight: 700;
   background: linear-gradient(135deg, var(--text-primary), var(--gold));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  margin-bottom: 0.2rem;
 }
 
-.dashboard-user-name {
-  font-size: 1.25rem;
+.dashboard-role {
+  font-size: var(--font-md);
   color: var(--text-primary);
-  opacity: 0.8;
-  text-align: center;
-  margin-bottom: 0.5rem;
-}
-
-.dashboard-user-role {
-  font-size: 1rem;
-  color: var(--gold);
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 3rem;
-  text-transform: capitalize;
-}
-
-.dashboard-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
-.dashboard-card {
-  background: var(--bg-primary);
-  border-radius: 20px;
-  padding: 2.5rem;
-  box-shadow: 0 10px 40px var(--shadow);
-  border: 1px solid rgba(212, 175, 55, 0.2);
-  transition: var(--transition);
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.dashboard-card:hover {
-  box-shadow: 0 15px 50px var(--shadow);
-  border-color: rgba(212, 175, 55, 0.4);
-}
-
-.dashboard-card-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.dashboard-card-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 0.75rem;
-}
-
-.dashboard-card-description {
-  font-size: 1rem;
-  color: var(--text-primary);
-  opacity: 0.7;
-  line-height: 1.6;
+  opacity: 0.75;
 }
 
 @media (max-width: 768px) {
   .dashboard-main {
-    padding: 2rem 1rem;
-  }
-
-  .dashboard-welcome {
-    font-size: 2rem;
-  }
-
-  .dashboard-user-name {
-    font-size: 1.1rem;
-  }
-
-  .dashboard-user-role {
-    font-size: 0.9rem;
-  }
-
-  .dashboard-cards {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .dashboard-navbar-container {
-    padding: 0 1rem;
-  }
-
-  .dashboard-card {
-    padding: 2rem;
+    padding: 2rem 1rem 2.5rem;
   }
 }
-
