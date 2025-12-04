@@ -6,6 +6,7 @@ import Toast from '../components/Toast';
 import DashboardNavbar from '../components/DashboardNavbar';
 import DigitalIDCard from '../components/DigitalIDCard';
 import Footer from '../components/Footer';
+import CustomDropdown from '../components/CustomDropdown';
 import './ProfilePage.css';
 
 const ProfilePage = () => {
@@ -26,6 +27,11 @@ const ProfilePage = () => {
         employeeId: profile.employeeId || '',
         university: profile.university || '',
         college: profile.college || '',
+        gender: profile.gender || '',
+        dateOfBirth: profile.dateOfBirth || '',
+        mobile: profile.mobile || '',
+        bloodGroup: profile.bloodGroup || '',
+        address: profile.address || '',
       });
     }
   }, [loading, user, profile, formData]);
@@ -59,6 +65,11 @@ const ProfilePage = () => {
         employeeId: formData.employeeId,
         university: formData.university,
         college: formData.college,
+        gender: formData.gender,
+        dateOfBirth: formData.dateOfBirth,
+        mobile: formData.mobile,
+        bloodGroup: formData.bloodGroup,
+        address: formData.address,
       });
       setToast({ message: 'Profile updated successfully.', type: 'success' });
     } catch (err) {
@@ -144,33 +155,38 @@ const ProfilePage = () => {
                     />
                   </div>
 
-                  <div className="form-group">
-                    <label htmlFor="university" className="form-label">
-                      University
-                    </label>
-                    <input
-                      id="university"
-                      name="university"
-                      type="text"
-                      value={formData.university}
-                      onChange={handleChange}
-                      placeholder="Your university"
-                    />
-                  </div>
+                  <CustomDropdown
+                    id="university"
+                    name="university"
+                    value={formData.university}
+                    onChange={handleChange}
+                    label="University"
+                    ariaLabel="Select your university"
+                    options={[
+                      { value: '', label: 'Select university' },
+                      { value: 'Savitribai Phule Pune University (SPPU)', label: 'Savitribai Phule Pune University (SPPU)' },
+                      { value: 'Mumbai University', label: 'Mumbai University' },
+                      { value: 'Dr. Babasaheb Ambedkar Technological University', label: 'Dr. Babasaheb Ambedkar Technological University' },
+                      { value: 'Shivaji University', label: 'Shivaji University' },
+                      { value: 'Rashtrasant Tukadoji Maharaj Nagpur University (RTMNU)', label: 'Rashtrasant Tukadoji Maharaj Nagpur University (RTMNU)' },
+                    ]}
+                  />
 
-                  <div className="form-group">
-                    <label htmlFor="college" className="form-label">
-                      College
-                    </label>
-                    <input
-                      id="college"
-                      name="college"
-                      type="text"
-                      value={formData.college}
-                      onChange={handleChange}
-                      placeholder="Your college"
-                    />
-                  </div>
+                  <CustomDropdown
+                    id="college"
+                    name="college"
+                    value={formData.college}
+                    onChange={handleChange}
+                    label="College"
+                    ariaLabel="Select your college"
+                    options={[
+                      { value: '', label: 'Select college' },
+                      { value: 'COEP (College of Engineering Pune)', label: 'COEP (College of Engineering Pune)' },
+                      { value: 'PCCOE (Pimpri Chinchwad College of Engineering)', label: 'PCCOE (Pimpri Chinchwad College of Engineering)' },
+                      { value: 'VIT Pune (Vishwakarma Institute of Technology)', label: 'VIT Pune (Vishwakarma Institute of Technology)' },
+                      { value: 'MIT-WPU (MIT World Peace University)', label: 'MIT-WPU (MIT World Peace University)' },
+                    ]}
+                  />
 
                   {isStudent && (
                     <>
@@ -192,13 +208,22 @@ const ProfilePage = () => {
                         <label htmlFor="course" className="form-label">
                           Course
                         </label>
-                        <input
+                        <CustomDropdown
                           id="course"
                           name="course"
-                          type="text"
                           value={formData.course}
                           onChange={handleChange}
-                          placeholder="Your course"
+                          label="Course"
+                          ariaLabel="Select your course"
+                          options={[
+                            { value: '', label: 'Select course' },
+                            { value: 'B.Tech (Bachelor of Technology)', label: 'B.Tech (Bachelor of Technology)' },
+                            { value: 'B.E (Bachelor of Engineering)', label: 'B.E (Bachelor of Engineering)' },
+                            { value: 'M.Tech (Master of Technology)', label: 'M.Tech (Master of Technology)' },
+                            { value: 'M.E (Master of Engineering)', label: 'M.E (Master of Engineering)' },
+                            { value: 'Diploma in Engineering', label: 'Diploma in Engineering' },
+                            { value: 'Polytechnic (Engineering)', label: 'Polytechnic (Engineering)' },
+                          ]}
                         />
                       </div>
                     </>
@@ -235,6 +260,97 @@ const ProfilePage = () => {
                       </div>
                     </>
                   )}
+
+                  <div className="form-group form-group--full">
+                    <label className="form-label">Gender</label>
+                    <div className="profile-gender-group">
+                      <label>
+                        <input
+                          type="radio"
+                          name="gender"
+                          value="Male"
+                          checked={formData.gender === 'Male'}
+                          onChange={handleChange}
+                        />
+                        <span>Male</span>
+                      </label>
+                      <label>
+                        <input
+                          type="radio"
+                          name="gender"
+                          value="Female"
+                          checked={formData.gender === 'Female'}
+                          onChange={handleChange}
+                        />
+                        <span>Female</span>
+                      </label>
+                      <label>
+                        <input
+                          type="radio"
+                          name="gender"
+                          value="Other"
+                          checked={formData.gender === 'Other'}
+                          onChange={handleChange}
+                        />
+                        <span>Other</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="dateOfBirth" className="form-label">
+                      Date of Birth
+                    </label>
+                    <input
+                      id="dateOfBirth"
+                      name="dateOfBirth"
+                      type="date"
+                      value={formData.dateOfBirth}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="mobile" className="form-label">
+                      Mobile Number
+                    </label>
+                    <input
+                      id="mobile"
+                      name="mobile"
+                      type="tel"
+                      value={formData.mobile}
+                      onChange={handleChange}
+                      placeholder="Enter your mobile number"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="bloodGroup" className="form-label">
+                      Blood Group
+                    </label>
+                    <input
+                      id="bloodGroup"
+                      name="bloodGroup"
+                      type="text"
+                      value={formData.bloodGroup}
+                      onChange={handleChange}
+                      placeholder="e.g. O+, A-, B+"
+                    />
+                  </div>
+
+                  <div className="form-group form-group--full">
+                    <label htmlFor="address" className="form-label">
+                      Address
+                    </label>
+                    <textarea
+                      id="address"
+                      name="address"
+                      rows="3"
+                      value={formData.address}
+                      onChange={handleChange}
+                      placeholder="Enter your address"
+                    />
+                  </div>
                 </div>
 
                 <motion.button
@@ -258,6 +374,11 @@ const ProfilePage = () => {
             course={formData?.course || profile?.course}
             department={formData?.department || profile?.department}
             college={formData?.college || profile?.college}
+            gender={formData?.gender || profile?.gender}
+            dateOfBirth={formData?.dateOfBirth || profile?.dateOfBirth}
+            mobile={formData?.mobile || profile?.mobile}
+            bloodGroup={formData?.bloodGroup || profile?.bloodGroup}
+            address={formData?.address || profile?.address}
           />
         </div>
       </main>

@@ -145,11 +145,11 @@ const DashboardNavbar = () => {
                     onClose={() => setShowProfileMenu(false)}
                     onViewProfile={() => {
                       setShowProfileMenu(false);
-                      navigate('/profile');
+                      navigate('/profile/view');
                     }}
                     onEditProfile={() => {
                       setShowProfileMenu(false);
-                      navigate('/profile');
+                      navigate('/profile/edit');
                     }}
                     onLogout={handleLogout}
                     isLoggingOut={isLoggingOut}

@@ -29,7 +29,7 @@
 }
 
 .dashboard-eyebrow {
-  font-size: var(--font-sm);
+  font-size: calc(var(--font-md) * 1.05);
   text-transform: uppercase;
   letter-spacing: 0.14em;
   color: var(--text-primary);
@@ -38,7 +38,7 @@
 }
 
 .dashboard-title {
-  font-size: calc(var(--font-lg) * 2.1);
+  font-size: calc(var(--font-lg) * 2.35);
   font-weight: 700;
   background: linear-gradient(135deg, var(--text-primary), var(--gold));
   -webkit-background-clip: text;
@@ -48,7 +48,7 @@
 }
 
 .dashboard-role {
-  font-size: var(--font-md);
+  font-size: calc(var(--font-md) * 1.25);
   color: var(--text-primary);
   opacity: 0.75;
 }

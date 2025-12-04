@@ -16,6 +16,7 @@ import HelpPage from "./pages/HelpPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import ProfilePage from "./pages/ProfilePage";
+import ViewProfilePage from "./pages/ViewProfilePage";
 import SmartNotes from "./pages/SmartNotes";
 import PYQs from "./pages/PYQs";
 import Announcements from "./pages/Announcements";
@@ -82,7 +83,8 @@ function App() {
               <Route path="/help" element={<HelpPage />} />
               <Route path="/privacy" element={<PrivacyPage />} />
               <Route path="/terms" element={<TermsPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/profile/edit" element={<ProfilePage />} />
+              <Route path="/profile/view" element={<ViewProfilePage />} />
               <Route path="/smart-notes" element={<SmartNotes />} />
               <Route path="/pyqs" element={<PYQs />} />
               <Route path="/announcements" element={<Announcements />} />

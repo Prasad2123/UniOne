@@ -50,6 +50,33 @@ const featureCards = [
   },
 ];
 
+const extraCards = [
+  {
+    id: 'recent-notes',
+    title: 'Recent Notes',
+    description: 'Jump back into your latest Smart Notes',
+    icon: '📓',
+  },
+  {
+    id: 'recent-pyqs',
+    title: 'Recent PYQs',
+    description: 'Continue where you left off in PYQs',
+    icon: '📄',
+  },
+  {
+    id: 'saved-items',
+    title: 'Saved Items',
+    description: 'View your bookmarked content',
+    icon: '⭐',
+  },
+  {
+    id: 'support',
+    title: 'Help & Support',
+    description: 'Get quick help and FAQs',
+    icon: '💬',
+  },
+];
+
 const DashboardCards = () => {
   return (
     <div className="dashboard-layout">
@@ -88,6 +115,54 @@ const DashboardCards = () => {
               index={index}
             />
           ))}
+        </div>
+      </section>
+
+      <section className="dashboard-section">
+        <div className="dashboard-section__header">
+          <h2 className="dashboard-section__title">Explore More</h2>
+        </div>
+
+        <div className="dashboard-features-grid">
+          {extraCards.map((card, index) => (
+            <QuickActionCard
+              key={card.id}
+              icon={card.icon}
+              title={card.title}
+              description={card.description}
+              index={index + featureCards.length}
+            />
+          ))}
+        </div>
+      </section>
+
+      <section className="dashboard-section">
+        <div className="dashboard-section__header">
+          <h2 className="dashboard-section__title">Recent Activity</h2>
+        </div>
+
+        <div className="dashboard-recent-activity">
+          <div className="dashboard-recent-item">
+            <span className="dashboard-recent-dot" />
+            <div className="dashboard-recent-content">
+              <p className="dashboard-recent-title">Viewed Smart Notes</p>
+              <p className="dashboard-recent-meta">Today • 2:15 PM</p>
+            </div>
+          </div>
+          <div className="dashboard-recent-item">
+            <span className="dashboard-recent-dot" />
+            <div className="dashboard-recent-content">
+              <p className="dashboard-recent-title">Opened PYQs - Semester 5</p>
+              <p className="dashboard-recent-meta">Yesterday • 9:40 PM</p>
+            </div>
+          </div>
+          <div className="dashboard-recent-item">
+            <span className="dashboard-recent-dot" />
+            <div className="dashboard-recent-content">
+              <p className="dashboard-recent-title">Checked Announcements</p>
+              <p className="dashboard-recent-meta">2 days ago</p>
+            </div>
+          </div>
         </div>
       </section>
     </div>
